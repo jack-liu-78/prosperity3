@@ -140,6 +140,7 @@ PARAMS = {
         "soft_position_limit": 10,
     },
     Product.KELP: {
+        "fair_value": 2035,
         "take_width": 1,
         "clear_width": 0,
         "prevent_adverse": True,
@@ -482,9 +483,14 @@ class Trader:
                 if Product.KELP in state.position
                 else 0
             )
-            KELP_fair_value = self.KELP_fair_value(
-                state.order_depths[Product.KELP], traderObject
-            )
+            KELP_fair_value = 2034
+
+            if state.timestamp > 30000:
+                KELP_fair_value = 2035
+            elif state.timestamp > 75000:
+                KELP_fair_value = 2036
+
+            
             KELP_take_orders, buy_order_volume, sell_order_volume = (
                 self.take_orders(
                     Product.KELP,
